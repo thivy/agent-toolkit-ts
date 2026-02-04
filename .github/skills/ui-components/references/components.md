@@ -1,61 +1,61 @@
 This contains a list of UI components from the shadcn/ui library for reference when building or looking for UI components.
 
-- [Accordion](https://ui.shadcn.com/docs/components/radix/accordion): A vertically stacked set of interactive headings that reveal and hide content sections.
-- [Alert](https://ui.shadcn.com/docs/components/radix/alert): A callout message for important information or status.
-- [Alert Dialog](https://ui.shadcn.com/docs/components/radix/alert-dialog): A modal dialog for confirmations or critical actions.
-- [Aspect Ratio](https://ui.shadcn.com/docs/components/radix/aspect-ratio): A container that preserves a consistent width-to-height ratio for media.
-- [Avatar](https://ui.shadcn.com/docs/components/radix/avatar): A user profile image with fallback initials.
-- [Badge](https://ui.shadcn.com/docs/components/radix/badge): A small label for status, counts, or metadata.
-- [Breadcrumb](https://ui.shadcn.com/docs/components/radix/breadcrumb): A navigation trail showing the current page hierarchy.
-- [Button](https://ui.shadcn.com/docs/components/radix/button): A clickable control to trigger actions.
-- [Button Group](https://ui.shadcn.com/docs/components/radix/button-group): A grouped set of related buttons.
-- [Calendar](https://ui.shadcn.com/docs/components/radix/calendar): A date grid for selecting days.
-- [Card](https://ui.shadcn.com/docs/components/radix/card): A content container with optional header and footer sections.
-- [Carousel](https://ui.shadcn.com/docs/components/radix/carousel): A scrollable set of slides for showcasing content.
-- [Chart](https://ui.shadcn.com/docs/components/radix/chart): Data visualization components for charts and graphs.
-- [Checkbox](https://ui.shadcn.com/docs/components/radix/checkbox): A boolean input for on/off selection.
-- [Collapsible](https://ui.shadcn.com/docs/components/radix/collapsible): A toggleable region that expands and collapses content.
-- [Combobox](https://ui.shadcn.com/docs/components/radix/combobox): A searchable select input with suggestions.
-- [Command](https://ui.shadcn.com/docs/components/radix/command): A command palette for quick navigation and actions.
-- [Context Menu](https://ui.shadcn.com/docs/components/radix/context-menu): A right-click menu for contextual actions.
-- [Data Table](https://ui.shadcn.com/docs/components/radix/data-table): A table with sorting, filtering, and pagination patterns.
-- [Date Picker](https://ui.shadcn.com/docs/components/radix/date-picker): An input for selecting a date from a calendar.
-- [Dialog](https://ui.shadcn.com/docs/components/radix/dialog): A modal overlay for focused content or actions.
-- [Direction](https://ui.shadcn.com/docs/components/radix/direction): Utilities for setting UI text direction (LTR/RTL).
-- [Drawer](https://ui.shadcn.com/docs/components/radix/drawer): A slide-in panel from an edge of the screen.
-- [Dropdown Menu](https://ui.shadcn.com/docs/components/radix/dropdown-menu): A menu triggered by a button or icon.
-- [Empty](https://ui.shadcn.com/docs/components/radix/empty): An empty-state layout for when no data is available.
-- [Field](https://ui.shadcn.com/docs/components/radix/field): A form field wrapper with label and description patterns.
-- [Hover Card](https://ui.shadcn.com/docs/components/radix/hover-card): A floating preview that appears on hover.
-- [Input](https://ui.shadcn.com/docs/components/radix/input): A single-line text input.
-- [Input Group](https://ui.shadcn.com/docs/components/radix/input-group): An input with leading/trailing addons.
-- [Input OTP](https://ui.shadcn.com/docs/components/radix/input-otp): A segmented input for one-time passwords.
-- [Item](https://ui.shadcn.com/docs/components/radix/item): A reusable item layout for list-style content.
-- [Kbd](https://ui.shadcn.com/docs/components/radix/kbd): A stylized representation of keyboard keys.
-- [Label](https://ui.shadcn.com/docs/components/radix/label): An accessible label for form controls.
-- [Menubar](https://ui.shadcn.com/docs/components/radix/menubar): A horizontal menu with nested items.
-- [Native Select](https://ui.shadcn.com/docs/components/radix/native-select): A styled native select element.
-- [Navigation Menu](https://ui.shadcn.com/docs/components/radix/navigation-menu): An accessible navigation menu with dropdowns.
-- [Pagination](https://ui.shadcn.com/docs/components/radix/pagination): Controls for navigating between pages of content.
-- [Popover](https://ui.shadcn.com/docs/components/radix/popover): A floating panel anchored to a trigger element.
-- [Progress](https://ui.shadcn.com/docs/components/radix/progress): A progress indicator for ongoing tasks.
-- [Radio Group](https://ui.shadcn.com/docs/components/radix/radio-group): A set of mutually exclusive options.
-- [Resizable](https://ui.shadcn.com/docs/components/radix/resizable): Panels that users can resize by dragging.
-- [Scroll Area](https://ui.shadcn.com/docs/components/radix/scroll-area): A styled container with custom scrollbars.
-- [Select](https://ui.shadcn.com/docs/components/radix/select): A custom select dropdown.
-- [Separator](https://ui.shadcn.com/docs/components/radix/separator): A visual divider between sections.
-- [Sheet](https://ui.shadcn.com/docs/components/radix/sheet): A side panel that slides in over content.
-- [Sidebar](https://ui.shadcn.com/docs/components/radix/sidebar): An application sidebar layout and components.
-- [Skeleton](https://ui.shadcn.com/docs/components/radix/skeleton): A loading placeholder that mimics content structure.
-- [Slider](https://ui.shadcn.com/docs/components/radix/slider): A range input for selecting a value.
-- [Sonner](https://ui.shadcn.com/docs/components/radix/sonner): A toast notification system for transient messages.
-- [Spinner](https://ui.shadcn.com/docs/components/radix/spinner): A loading spinner indicator.
-- [Switch](https://ui.shadcn.com/docs/components/radix/switch): A toggle control for boolean values.
-- [Table](https://ui.shadcn.com/docs/components/radix/table): A basic table layout for rows and columns.
-- [Tabs](https://ui.shadcn.com/docs/components/radix/tabs): A tabbed interface for switching content panels.
-- [Textarea](https://ui.shadcn.com/docs/components/radix/textarea): A multi-line text input.
-- [Toast](https://ui.shadcn.com/docs/components/radix/toast): A pop-up notification pattern for brief messages.
-- [Toggle](https://ui.shadcn.com/docs/components/radix/toggle): A pressable button that toggles on or off.
-- [Toggle Group](https://ui.shadcn.com/docs/components/radix/toggle-group): A set of toggles for single or multiple selection.
-- [Tooltip](https://ui.shadcn.com/docs/components/radix/tooltip): A small label shown on hover or focus.
-- [Typography](https://ui.shadcn.com/docs/components/radix/typography): Prose styles for headings, paragraphs, and lists.
+- [Accordion](https://ui.shadcn.com/docs/components/base/accordion): A vertically stacked set of interactive headings that reveal and hide content sections.
+- [Alert](https://ui.shadcn.com/docs/components/base/alert): A callout message for important information or status.
+- [Alert Dialog](https://ui.shadcn.com/docs/components/base/alert-dialog): A modal dialog for confirmations or critical actions.
+- [Aspect Ratio](https://ui.shadcn.com/docs/components/base/aspect-ratio): A container that preserves a consistent width-to-height ratio for media.
+- [Avatar](https://ui.shadcn.com/docs/components/base/avatar): A user profile image with fallback initials.
+- [Badge](https://ui.shadcn.com/docs/components/base/badge): A small label for status, counts, or metadata.
+- [Breadcrumb](https://ui.shadcn.com/docs/components/base/breadcrumb): A navigation trail showing the current page hierarchy.
+- [Button](https://ui.shadcn.com/docs/components/base/button): A clickable control to trigger actions.
+- [Button Group](https://ui.shadcn.com/docs/components/base/button-group): A grouped set of related buttons.
+- [Calendar](https://ui.shadcn.com/docs/components/base/calendar): A date grid for selecting days.
+- [Card](https://ui.shadcn.com/docs/components/base/card): A content container with optional header and footer sections.
+- [Carousel](https://ui.shadcn.com/docs/components/base/carousel): A scrollable set of slides for showcasing content.
+- [Chart](https://ui.shadcn.com/docs/components/base/chart): Data visualization components for charts and graphs.
+- [Checkbox](https://ui.shadcn.com/docs/components/base/checkbox): A boolean input for on/off selection.
+- [Collapsible](https://ui.shadcn.com/docs/components/base/collapsible): A toggleable region that expands and collapses content.
+- [Combobox](https://ui.shadcn.com/docs/components/base/combobox): A searchable select input with suggestions.
+- [Command](https://ui.shadcn.com/docs/components/base/command): A command palette for quick navigation and actions.
+- [Context Menu](https://ui.shadcn.com/docs/components/base/context-menu): A right-click menu for contextual actions.
+- [Data Table](https://ui.shadcn.com/docs/components/base/data-table): A table with sorting, filtering, and pagination patterns.
+- [Date Picker](https://ui.shadcn.com/docs/components/base/date-picker): An input for selecting a date from a calendar.
+- [Dialog](https://ui.shadcn.com/docs/components/base/dialog): A modal overlay for focused content or actions.
+- [Direction](https://ui.shadcn.com/docs/components/base/direction): Utilities for setting UI text direction (LTR/RTL).
+- [Drawer](https://ui.shadcn.com/docs/components/base/drawer): A slide-in panel from an edge of the screen.
+- [Dropdown Menu](https://ui.shadcn.com/docs/components/base/dropdown-menu): A menu triggered by a button or icon.
+- [Empty](https://ui.shadcn.com/docs/components/base/empty): An empty-state layout for when no data is available.
+- [Field](https://ui.shadcn.com/docs/components/base/field): A form field wrapper with label and description patterns.
+- [Hover Card](https://ui.shadcn.com/docs/components/base/hover-card): A floating preview that appears on hover.
+- [Input](https://ui.shadcn.com/docs/components/base/input): A single-line text input.
+- [Input Group](https://ui.shadcn.com/docs/components/base/input-group): An input with leading/trailing addons.
+- [Input OTP](https://ui.shadcn.com/docs/components/base/input-otp): A segmented input for one-time passwords.
+- [Item](https://ui.shadcn.com/docs/components/base/item): A reusable item layout for list-style content.
+- [Kbd](https://ui.shadcn.com/docs/components/base/kbd): A stylized representation of keyboard keys.
+- [Label](https://ui.shadcn.com/docs/components/base/label): An accessible label for form controls.
+- [Menubar](https://ui.shadcn.com/docs/components/base/menubar): A horizontal menu with nested items.
+- [Native Select](https://ui.shadcn.com/docs/components/base/native-select): A styled native select element.
+- [Navigation Menu](https://ui.shadcn.com/docs/components/base/navigation-menu): An accessible navigation menu with dropdowns.
+- [Pagination](https://ui.shadcn.com/docs/components/base/pagination): Controls for navigating between pages of content.
+- [Popover](https://ui.shadcn.com/docs/components/base/popover): A floating panel anchored to a trigger element.
+- [Progress](https://ui.shadcn.com/docs/components/base/progress): A progress indicator for ongoing tasks.
+- [Radio Group](https://ui.shadcn.com/docs/components/base/radio-group): A set of mutually exclusive options.
+- [Resizable](https://ui.shadcn.com/docs/components/base/resizable): Panels that users can resize by dragging.
+- [Scroll Area](https://ui.shadcn.com/docs/components/base/scroll-area): A styled container with custom scrollbars.
+- [Select](https://ui.shadcn.com/docs/components/base/select): A custom select dropdown.
+- [Separator](https://ui.shadcn.com/docs/components/base/separator): A visual divider between sections.
+- [Sheet](https://ui.shadcn.com/docs/components/base/sheet): A side panel that slides in over content.
+- [Sidebar](https://ui.shadcn.com/docs/components/base/sidebar): An application sidebar layout and components.
+- [Skeleton](https://ui.shadcn.com/docs/components/base/skeleton): A loading placeholder that mimics content structure.
+- [Slider](https://ui.shadcn.com/docs/components/base/slider): A range input for selecting a value.
+- [Sonner](https://ui.shadcn.com/docs/components/base/sonner): A toast notification system for transient messages.
+- [Spinner](https://ui.shadcn.com/docs/components/base/spinner): A loading spinner indicator.
+- [Switch](https://ui.shadcn.com/docs/components/base/switch): A toggle control for boolean values.
+- [Table](https://ui.shadcn.com/docs/components/base/table): A basic table layout for rows and columns.
+- [Tabs](https://ui.shadcn.com/docs/components/base/tabs): A tabbed interface for switching content panels.
+- [Textarea](https://ui.shadcn.com/docs/components/base/textarea): A multi-line text input.
+- [Toast](https://ui.shadcn.com/docs/components/base/toast): A pop-up notification pattern for brief messages.
+- [Toggle](https://ui.shadcn.com/docs/components/base/toggle): A pressable button that toggles on or off.
+- [Toggle Group](https://ui.shadcn.com/docs/components/base/toggle-group): A set of toggles for single or multiple selection.
+- [Tooltip](https://ui.shadcn.com/docs/components/base/tooltip): A small label shown on hover or focus.
+- [Typography](https://ui.shadcn.com/docs/components/base/typography): Prose styles for headings, paragraphs, and lists.
