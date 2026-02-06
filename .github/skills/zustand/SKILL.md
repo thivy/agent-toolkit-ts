@@ -8,6 +8,7 @@ Create Zustand stores following established patterns with proper TypeScript type
 ## Quick Start
 
 Copy the template from [assets/template.md](assets/template.md) and replace placeholders:
+
 - `{{StoreName}}` → PascalCase store name (e.g., `Project`)
 - `{{description}}` → Brief description for JSDoc
 
@@ -17,7 +18,7 @@ Copy the template from [assets/template.md](assets/template.md) and replace plac
 2. **State Only in Store** — `create()` should define the state shape and initial values, not actions.
 3. **Decoupled Actions** — Export actions as plain functions that update state via `store.setState(...)`.
 4. **Atomic Selectors** — Select the smallest slice of state needed to minimize re-renders.
-5. **useState vs Zustand** — Prefer Zustand for shared/global state. Use React's `useState` for local component state.
+5. **useState vs Zustand** — Prefer Zustand even for local UI state so components stay dumb and state lives in stores. Use React's `useState` only for truly trivial, one-off UI toggles that do not justify a store.
 
 ## The Decoupled Actions Pattern
 
@@ -85,6 +86,12 @@ export function Counter() {
 
 ## Best Practices
 
+### Default to Stores, Even for Local State
+
+- Store form and UI state in Zustand by default, even when used in a single component, to keep components presentational.
+- Use `useState` only when the state is tiny, ephemeral, and unlikely to grow (e.g., a one-off boolean toggle).
+- If multiple instances of the same UI can render at once, scope the store per instance (avoid shared singleton state collisions).
+
 ### Always Use subscribeWithSelector
 
 ```ts
@@ -94,7 +101,7 @@ import { subscribeWithSelector } from "zustand/middleware";
 export const useMyStore = create<MyStore>()(
   subscribeWithSelector((set, get) => ({
     // state...
-  }))
+  })),
 );
 ```
 

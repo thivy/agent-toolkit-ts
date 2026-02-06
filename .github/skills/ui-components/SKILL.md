@@ -3,6 +3,16 @@ name: ui-components
 description: Best practices for building UI with shadcn/ui and Tailwind.
 ---
 
+## Decision Flow
+
+Before building any UI component, follow these steps in order. Stop as soon as you find a match.
+
+1. **Check existing components** — Search `web/components/ui/` and `web/components/blocks/` for an existing component that fits. If found, import via `@/components/*` and use it.
+
+2. **Check shadcn/ui library** — If no existing component matches, look up the equivalent in `./references/components.md`. If available, install it using instructions from the `web/` directory.
+
+3. **Create a new primitive** — Only if steps 1 and 2 fail, create a new primitive under `web/components/ui/`. Keep it generic with no domain logic.
+
 ## Core Principles
 
 1. **Compose, Don’t Rebuild** — Prefer composing existing shadcn/ui primitives over creating new primitives.
@@ -16,12 +26,6 @@ description: Best practices for building UI with shadcn/ui and Tailwind.
 - `web/components/ui/` — UI primitives only (buttons, inputs, dialogs, etc.).
 - `web/components/blocks/` — reusable compositions built from primitives.
 - `web/features/*` — feature/domain UI (may compose blocks + primitives; owns feature logic).
-
-## Decision Flow
-
-1. Reuse an existing component from `web/components/*` (import via `@/components/*`).
-2. If missing, look up the equivalent shadcn component using the skills reference /references/components.md
-3. If still missing, create a new primitive under `web/components/ui/`.
 
 ## Styling Conventions
 
