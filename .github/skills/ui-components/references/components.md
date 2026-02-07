@@ -12,7 +12,7 @@ This contains a list of UI components from the shadcn/ui library for reference w
 - [Calendar](https://ui.shadcn.com/docs/components/base/calendar): A date grid for selecting days.
 - [Card](https://ui.shadcn.com/docs/components/base/card): A content container with optional header and footer sections.
 - [Carousel](https://ui.shadcn.com/docs/components/base/carousel): A scrollable set of slides for showcasing content.
-- [Chart](https://ui.shadcn.com/docs/components/base/chart): Data visualization components for charts and graphs.
+- Charts references live in ./charts.md.
 - [Checkbox](https://ui.shadcn.com/docs/components/base/checkbox): A boolean input for on/off selection.
 - [Collapsible](https://ui.shadcn.com/docs/components/base/collapsible): A toggleable region that expands and collapses content.
 - [Combobox](https://ui.shadcn.com/docs/components/base/combobox): A searchable select input with suggestions.
