@@ -1,15 +1,17 @@
 "use client";
 
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Heading } from "@/components/ui/heading";
 
 export const HomePage = () => {
   return (
-    <div className="mx-auto max-w-2xl p-6 space-y-6">
-      <Card>
-        <CardHeader>Hello</CardHeader>
-        <CardContent className="space-y-2">This is my $1 Billion app.</CardContent>
-        <CardFooter className="gap-2"></CardFooter>
-      </Card>
+    <div className="mx-auto max-w-2xl h-screen flex flex-col justify-center gap-6">
+      <Heading variant="h1" className="">
+        Agent Toolkit
+      </Heading>
+      <p className="text-lg text-muted-foreground">
+        Opinionated approach to building production ready line-of-business applications that
+        integrate multiple enterprise APIs at speed.
+      </p>
     </div>
   );
 };

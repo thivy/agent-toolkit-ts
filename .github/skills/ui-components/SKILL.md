@@ -1,6 +1,6 @@
 ---
 name: ui-components
-description: Best practices for building UI with shadcn/ui and Tailwind.
+description: Best practices for building UI with shadcn/ui, Tailwind, and chart references.
 ---
 
 ## Decision Flow
@@ -12,6 +12,11 @@ Before building any UI component, follow these steps in order. Stop as soon as y
 2. **Check shadcn/ui library** — If no existing component matches, look up the equivalent in `./references/components.md`. If available, install it using instructions from the `web/` directory.
 
 3. **Create a new primitive** — Only if steps 1 and 2 fail, create a new primitive under `web/components/ui/`. Keep it generic with no domain logic.
+
+## Charts References
+
+- Use `./references/charts.md` for chart docs and gallery links.
+- Use `./references/charts-*.md` for chart example summaries by type.
 
 ## Core Principles
 
