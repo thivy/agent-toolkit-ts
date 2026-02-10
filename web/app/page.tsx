@@ -1,5 +1,5 @@
-import { HomePage } from "@/features/home/home-page";
+import { DashboardPage } from "@/features/dashboard/dashboard-page";
 
 export default function Home() {
-  return <HomePage />;
+  return <DashboardPage />;
 }
