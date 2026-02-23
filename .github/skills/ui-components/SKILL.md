@@ -9,7 +9,7 @@ Before building any UI component, follow these steps in order. Stop as soon as y
 
 1. **Check existing components** — Search `web/components/ui/` and `web/components/blocks/` for an existing component that fits. If found, import via `@/components/*` and use it.
 
-2. **Check shadcn/ui library** — If no existing component matches, look up the equivalent in `./references/components.md`. If available, install it using instructions from the `web/` directory.
+2. **Check shadcn/ui library** — If no existing component matches, look up the equivalent in `https://ui.shadcn.com/llms.txt`. If available, install it using instructions from the `web/` directory.
 
 3. **Create a new primitive** — Only if steps 1 and 2 fail, create a new primitive under `web/components/ui/`. Keep it generic with no domain logic.
 
