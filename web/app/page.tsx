@@ -1,5 +1,5 @@
-import { HomePage } from "@/features/home/home-page";
+import { TodoPage } from "@/features/todo/todo-page";
 
 export default function Home() {
-  return <HomePage />;
+  return <TodoPage />;
 }
