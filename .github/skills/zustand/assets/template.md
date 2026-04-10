@@ -1,24 +1,20 @@
+# Zustand Store Template
+
+Replace the placeholders before using this template:
+
+- `{{StoreName}}` -> PascalCase store name, for example `Project`
+- `{{description}}` -> short purpose statement, for example `project selection and loading state`
+
+```ts
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
-// ============================================================================
-// Types
-// ============================================================================
-
-/**
- * {{StoreName}}State - The state shape for this store
- */
 export interface {{StoreName}}State {
-  // Add state properties
-  items: unknown[];
+  items: string[];
   selectedId: string | null;
   isLoading: boolean;
   error: string | null;
 }
-
-// ============================================================================
-// Initial State
-// ============================================================================
 
 const initialState: {{StoreName}}State = {
   items: [],
@@ -27,81 +23,56 @@ const initialState: {{StoreName}}State = {
   error: null,
 };
 
-// ============================================================================
-// Store
-// ============================================================================
-
 /**
- * use{{StoreName}}Store - Zustand store for managing {{description}}
- *
- * @example
- * ```typescript
- * // In a component - use individual selectors for performance
- * const items = use{{StoreName}}Store((state) => state.items);
- * const loadItems = use{{StoreName}}Store((state) => state.loadItems);
- *
- * // Subscribe to changes outside React
- * use{{StoreName}}Store.subscribe(
- *   (state) => state.selectedId,
- *   (selectedId) => console.log('Selected:', selectedId)
- * );
- * ```
+ * Zustand store for {{description}}.
  */
 export const use{{StoreName}}Store = create<{{StoreName}}State>()(
   subscribeWithSelector(() => ({
-    // Initial state
     ...initialState,
-  }))
+  })),
 );
 
-// ============================================================================
-// Actions (decoupled)
-// ============================================================================
-
-export const setItems = (items: unknown[]) => {
+export const set{{StoreName}}Items = (items: string[]) => {
   use{{StoreName}}Store.setState({ items });
 };
 
-export const setSelectedId = (selectedId: string | null) => {
+export const set{{StoreName}}SelectedId = (selectedId: string | null) => {
   use{{StoreName}}Store.setState({ selectedId });
 };
 
-export const setLoading = (isLoading: boolean) => {
-  use{{StoreName}}Store.setState({ isLoading });
-};
-
-export const setError = (error: string | null) => {
-  use{{StoreName}}Store.setState({ error });
-};
-
-export const loadItems = async () => {
+export const start{{StoreName}}Loading = () => {
   use{{StoreName}}Store.setState({ isLoading: true, error: null });
-  try {
-    // const items = await fetchItems();
-    const items: unknown[] = []; // Replace with actual fetch
-    use{{StoreName}}Store.setState({ items, isLoading: false });
-  } catch (error) {
-    use{{StoreName}}Store.setState({
-      error: error instanceof Error ? error.message : "Failed to load",
-      isLoading: false,
-    });
-  }
 };
 
-export const addItem = (item: unknown) => {
+export const finish{{StoreName}}Loading = (items: string[]) => {
+  use{{StoreName}}Store.setState({ items, isLoading: false });
+};
+
+export const fail{{StoreName}}Loading = (message: string) => {
+  use{{StoreName}}Store.setState({ error: message, isLoading: false });
+};
+
+export const add{{StoreName}}Item = (item: string) => {
   use{{StoreName}}Store.setState((state) => ({
     items: [...state.items, item],
   }));
 };
 
-export const removeItem = (id: string) => {
+export const remove{{StoreName}}Item = (item: string) => {
   use{{StoreName}}Store.setState((state) => ({
-    items: state.items.filter((item) => (item as { id: string }).id !== id),
-    // Clear selection if removed item was selected
-    selectedId: state.selectedId === id ? null : state.selectedId,
+    items: state.items.filter((currentItem) => currentItem !== item),
+    selectedId: state.selectedId === item ? null : state.selectedId,
   }));
 };
 
-export const reset = () => {
-  use{{StoreName}}Store.setState(initialState);
+export const reset{{StoreName}}Store = () => {
+  use{{StoreName}}Store.setState({ ...initialState });
 };
+```
+
+## Usage Notes
+
+- Keep async fetching and orchestration in decoupled actions or service modules, not render functions.
+- In Client Components, subscribe with atomic selectors such as `const items = use{{StoreName}}Store((state) => state.items);`.
+- Import actions directly rather than selecting them from the store.
+- If multiple independent instances can render, wrap a per-instance store factory in context instead of reusing this singleton template.

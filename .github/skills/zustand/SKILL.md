@@ -1,216 +1,212 @@
 ---
 name: zustand
-description: Expert knowledge for client-side state management with Zustand using the decoupled actions pattern.
+description: "Create or refactor React and Next.js client state with Zustand. Use when building a new store, replacing useState or useReducer, fixing actions inside create(), tightening selectors, or choosing between singleton and per-instance stores."
+argument-hint: "Describe the client state to create or refactor, and whether it should be shared or per-instance."
 ---
 
-Create Zustand stores following established patterns with proper TypeScript types and middleware.
+# Zustand State Management
+
+Use this skill to create client-side Zustand stores with predictable render behavior, decoupled actions, and clear boundaries between Server and Client Components.
+
+## When to Use
+
+- Create a new Zustand store for a React or Next.js Client Component flow
+- Refactor a store that defines actions inside `create()`
+- Replace `useState` or `useReducer`, including small local UI state such as toggles, tabs, drawers, and form state
+- Review selector granularity, reset behavior, or hydration patterns
+- Decide whether state should live in a singleton store or a per-instance provider or store factory
+
+## Do Not Use
+
+- Server-side or request-scoped state
+- Data that should be derived during render instead of persisted
+- Shared singleton state when multiple independent instances need isolated data
 
 ## Quick Start
 
-Copy the template from [assets/template.md](assets/template.md) and replace placeholders:
+Start from the [store template](./assets/template.md) and replace the placeholders:
 
-- `{{StoreName}}` → PascalCase store name (e.g., `Project`)
-- `{{description}}` → Brief description for JSDoc
+- `{{StoreName}}` -> PascalCase store name, for example `Project`
+- `{{description}}` -> short purpose statement, for example `project selection and loading state`
+
+## Workflow
+
+1. Classify the state.
+   - Confirm the state is client-side.
+
+- Default to Zustand even when the state is small, local, or used by only one component.
+- Decide whether it should be shared globally or scoped per rendered instance.
+- Keep derived values out of the store unless subscription or persistence semantics require them.
+
+2. Define the store shape.
+   - Create a `State` interface and an `initialState` constant.
+   - Build the store with `create()` and `subscribeWithSelector`.
+   - Keep `create()` state-only.
+3. Export decoupled actions.
+   - Export plain functions that call `store.setState(...)`.
+   - Use direct object updates for static assignments.
+   - Use functional updates when the next value depends on the previous value.
+   - Include a `reset` action that restores `initialState`.
+4. Integrate with UI.
+   - Import the store only from `"use client"` components.
+   - Read state with atomic selectors.
+   - Import actions directly instead of selecting them from the store.
+   - Pass server-fetched data through props into a client boundary, then hydrate with an action if needed.
+5. Validate.
+   - No actions inside `create()`.
+   - No broad whole-store subscriptions unless intentional.
+   - No store imports in Server Components.
+   - Run `npm run lint`.
+
+## Decision Points
+
+- Zustand vs local React state: Always use Zustand for mutable client state in this workflow. Do not keep `useState` or `useReducer`, even for small local toggles, one-field forms, or one-off component state.
+- Singleton vs per-instance store: Use a singleton for shared application state. Use a provider or store factory when more than one independent instance can render at the same time.
+- Stored vs derived data: Store source data. Derive filtered lists, counts, labels, and view models during render or in selectors.
+- Selector strategy: Prefer single-field atomic selectors. Use `useShallow` only when grouped values are intentionally consumed together.
+- Async orchestration: Keep client-side async flows in decoupled actions or service modules, not inside render paths.
 
 ## Core Principles
 
-1. **Client-Side Only** — Use Zustand for client-side state only. Store modules must only be imported from Client Components.
-2. **State Only in Store** — `create()` should define the state shape and initial values, not actions.
-3. **Decoupled Actions** — Export actions as plain functions that update state via `store.setState(...)`.
-4. **Atomic Selectors** — Select the smallest slice of state needed to minimize re-renders.
-5. **useState vs Zustand** — Prefer Zustand even for local UI state so components stay dumb and state lives in stores. Use React's `useState` only for truly trivial, one-off UI toggles that do not justify a store.
+1. Client-side only. Zustand stores belong behind a client boundary.
+2. State only in `create()`. Define the store shape and initial values there, not actions.
+3. Zustand over React local state. Do not use `useState` or `useReducer` for mutable client state, even when the scope is small and local.
+4. Decoupled actions. Export standalone functions so components do not subscribe to action references.
+5. Atomic subscriptions. Select the smallest slice possible to minimize re-renders.
+6. Explicit resets. Every reusable store should have a `reset` path that returns to `initialState`.
 
-## The Decoupled Actions Pattern
+## Reference Pattern
 
-### Why This Pattern?
-
-- **No hook for actions** — Components import actions directly to avoid subscribing to action references and causing unnecessary re-renders.
-- **Testable** — Actions are plain functions that can be tested in isolation.
-- **Tree-shakeable** — Unused actions are eliminated from the bundle.
-
-### Store Definition
+### Store Module
 
 ```ts
-// web/store/use-example-store.ts
+// features/projects/store/use-project-store.ts
 import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
 
-interface ExampleState {
+interface ProjectState {
   count: number;
   items: string[];
+  isLoading: boolean;
 }
 
-// 1) Store definition (state only)
-export const useExampleStore = create<ExampleState>(() => ({
+const initialState: ProjectState = {
   count: 0,
   items: [],
-}));
-
-// 2) Decoupled actions (exported individually)
-export const increment = () => {
-  useExampleStore.setState((state) => ({ count: state.count + 1 }));
+  isLoading: false,
 };
 
-export const decrement = () => {
-  useExampleStore.setState((state) => ({ count: state.count - 1 }));
+export const useProjectStore = create<ProjectState>()(
+  subscribeWithSelector(() => ({
+    ...initialState,
+  })),
+);
+
+export const setProjectItems = (items: string[]) => {
+  useProjectStore.setState({ items });
 };
 
-export const addItem = (item: string) => {
-  useExampleStore.setState((state) => ({ items: [...state.items, item] }));
+export const incrementProjectCount = () => {
+  useProjectStore.setState((state) => ({
+    count: state.count + 1,
+  }));
 };
 
-export const reset = () => {
-  useExampleStore.setState({ count: 0, items: [] });
+export const setProjectLoading = (isLoading: boolean) => {
+  useProjectStore.setState({ isLoading });
+};
+
+export const resetProjectStore = () => {
+  useProjectStore.setState({ ...initialState });
 };
 ```
 
-### Consuming in Client Components
+### Client Component Consumption
 
 ```tsx
 "use client";
 
-import { increment, decrement, useExampleStore } from "@/store/use-example-store";
+import {
+  incrementProjectCount,
+  useProjectStore,
+} from "@/features/projects/store/use-project-store";
 
-export function Counter() {
-  // Atomic selector: only re-renders when count changes
-  const count = useExampleStore((state) => state.count);
+export function ProjectCounter() {
+  const count = useProjectStore((state) => state.count);
+  const isLoading = useProjectStore((state) => state.isLoading);
 
   return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
-    </div>
+    <button onClick={incrementProjectCount} disabled={isLoading}>
+      Count: {count}
+    </button>
   );
 }
 ```
 
-## Best Practices
-
-### Default to Stores, Even for Local State
-
-- Store form and UI state in Zustand by default, even when used in a single component, to keep components presentational.
-- Use `useState` only when the state is tiny, ephemeral, and unlikely to grow (e.g., a one-off boolean toggle).
-- If multiple instances of the same UI can render at once, scope the store per instance (avoid shared singleton state collisions).
-
-### Always Use subscribeWithSelector
-
-```ts
-import { create } from "zustand";
-import { subscribeWithSelector } from "zustand/middleware";
-
-export const useMyStore = create<MyStore>()(
-  subscribeWithSelector((set, get) => ({
-    // state...
-  })),
-);
-```
-
-### Separate State and Actions
-
-```ts
-export interface MyState {
-  items: Item[];
-  isLoading: boolean;
-}
-
-export interface MyActions {
-  addItem: (item: Item) => void;
-  loadItems: () => Promise<void>;
-}
-
-export type MyStore = MyState & MyActions;
-```
-
-### Use Individual Selectors
-
-```ts
-// ✅ Correct: only re-renders when `items` changes
-const items = useMyStore((state) => state.items);
-
-// ❌ Avoid: re-renders on any state change
-const { items, isLoading } = useMyStore();
-```
-
-### Functional Updates
-
-Use functional updates when the new value depends on previous state:
-
-```ts
-// ✅ Correct: functional update
-export const increment = () => {
-  useExampleStore.setState((state) => ({ count: state.count + 1 }));
-};
-
-// ❌ Avoid: reading state outside setState when updating
-export const incrementBad = () => {
-  const current = useExampleStore.getState().count;
-  useExampleStore.setState({ count: current + 1 });
-};
-```
-
-### Atomic Selectors
-
-Select only what you need to prevent unnecessary re-renders:
-
-```tsx
-// ✅ Correct: atomic selector
-const count = useExampleStore((state) => state.count);
-
-// ❌ Avoid: selecting entire state
-const state = useExampleStore();
-```
-
-### Multiple Selectors
-
-When you need multiple values, use separate selectors or shallow equality:
+### Grouped Selectors When Needed
 
 ```tsx
 import { useShallow } from "zustand/react/shallow";
 
-// Option 1: Multiple atomic selectors
-const count = useExampleStore((state) => state.count);
-const items = useExampleStore((state) => state.items);
-
-// Option 2: useShallow for object selection
-const { count, items } = useExampleStore(
-  useShallow((state) => ({ count: state.count, items: state.items })),
+const { count, items } = useProjectStore(
+  useShallow((state) => ({
+    count: state.count,
+    items: state.items,
+  })),
 );
 ```
 
-### Don't Import Stores in Server Components
+### Server and Client Composition
 
 ```tsx
-// ❌ Avoid: This will fail - Server Components cannot use client state
-// app/page.tsx (Server Component)
-import { useExampleStore } from "@/store/use-example-store";
+// app/projects/page.tsx
+import { ProjectsClient } from "./projects-client";
 
-// ✅ Correct: Pass data from Server Component to Client Component via props
-// app/page.tsx
-export default function Page() {
-  return <ClientCounter initialCount={0} />;
+export default async function Page() {
+  const initialItems = ["alpha", "beta"];
+  return <ProjectsClient initialItems={initialItems} />;
 }
 ```
 
-### Don't Define Actions Inside create()
+```tsx
+"use client";
+
+import { useEffect } from "react";
+import { setProjectItems, useProjectStore } from "@/features/projects/store/use-project-store";
+
+export function ProjectsClient({ initialItems }: { initialItems: string[] }) {
+  const items = useProjectStore((state) => state.items);
+
+  useEffect(() => {
+    setProjectItems(initialItems);
+  }, [initialItems]);
+
+  return <p>{items.length} projects</p>;
+}
+```
+
+## Anti-patterns
 
 ```ts
-// ❌ Avoid: actions inside create
-export const useStore = create<State & Actions>((set) => ({
+// Avoid useState for local client state in this workflow
+const [isOpen, setIsOpen] = useState(false);
+
+// Avoid actions inside create()
+export const useBadStore = create<State & Actions>((set) => ({
   count: 0,
   increment: () => set((state) => ({ count: state.count + 1 })),
 }));
 
-// ✅ Correct: decoupled actions
-export const useStore = create<State>(() => ({ count: 0 }));
-export const increment = () => useStore.setState((s) => ({ count: s.count + 1 }));
+// Avoid whole-store subscriptions in components
+const state = useBadStore();
 ```
 
-## Quality Checklist
+## Completion Criteria
 
-Before completing any Zustand-related task:
-
-1. Verify stores are only imported in Client Components (`'use client'`)
-2. Actions are exported as standalone functions, not inside `create()`
-3. Components use atomic selectors to minimize re-renders
-4. Functional updates are used when new state depends on previous state
-5. Run `bun run lint` to verify no type errors
+1. The store module exports the state hook plus standalone action functions.
+2. `create()` contains state only.
+3. Every computed update uses functional `setState`.
+4. Consuming components are Client Components.
+5. Selectors are atomic or shallow-grouped intentionally.
+6. The store exposes a `reset` action.
+7. `npm run lint` passes.
