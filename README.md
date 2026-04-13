@@ -5,7 +5,7 @@ This repo showcases GitHub Copilot coding agents and reusable skills that speed 
 ## What You Get
 
 - A working Next.js app under [web/](web/) for hands-on examples.
-- A 2-phase agent workflow under [.github/agents/](.github/agents/) for combined planning and task planning.
+- A 2-phase agent workflow under [.github/agents/](.github/agents/) for requirements discovery and implementation planning.
 - Agent and skill docs under [.github/skills/](.github/skills/) to guide Copilot on best practices.
 - Consistent conventions for components, features, and state that keep changes small and reviewable.
 
@@ -21,8 +21,8 @@ This repo showcases GitHub Copilot coding agents and reusable skills that speed 
 
 - [AGENTS.md](AGENTS.md) - How agents should work in this repo.
 - [.github/agents/](.github/agents/) - Built-in planning agents:
-  - [📝 Plan](.github/agents/plan.agent.md) - Gathers requirements and produces a combined planning output with technical design.
-  - [✅ Task](.github/agents/task.agent.md) - Breaks the approved plan into actionable implementation tasks.
+  - [🔎 Discover](.github/agents/discover.agent.md) - Researches the request, aligns with the user, and writes the feature PRD to `requirement.md`.
+  - [⚒️ Forge](.github/agents/forge.agent.md) - Uses the approved PRD to produce an execution-ready implementation plan in `plan.md`.
 - [web/](web/) - Next.js application code.
 - [.github/skills/](.github/skills/) - Skill references that guide Copilot on React composition, Next.js patterns, UI composition, and state management.
 
@@ -30,10 +30,10 @@ This repo showcases GitHub Copilot coding agents and reusable skills that speed 
 
 Use the two agents in order for spec-driven delivery:
 
-1. **📝 Plan** → capture requirements and define the technical approach in one approved plan output.
-2. **✅ Task** → generate an execution-ready task breakdown from that approved plan.
+1. **🔎 Discover** → capture requirements, research constraints, and produce an approved PRD.
+2. **⚒️ Forge** → turn the approved PRD into an execution-ready implementation plan.
 
-Each agent is phase-scoped and writes only its phase artifact under `specs/features/{NNN}-{feature-name}/`.
+Each agent is phase-scoped and writes only its own artifact under `specs/features/{NNN}-{feature-name}/`: Discover owns `requirement.md`, and Forge owns `plan.md`.
 
 ## Quick Start
 
@@ -48,10 +48,23 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Use With GitHub Copilot
 
-Ask Copilot to:
+Select the `Discover agent` and provide a feature request. For example:
 
-- Generate new UI using existing shadcn/ui primitives.
-- Extend features using the composition patterns in the skills.
-- Create or refactor Zustand stores using the decoupled actions template.
+```markdown
+I want to build a fast guest check-in web app that captures first name, last name, and an webcam photo.
+
+- the initial screen should always show the camera feed in the middle of the screen
+- on right side of the screen, there should be a form to enter first name and last name, and a check in button
+- on the left it should show all the guests that have been checked in during the current day, with their name and photo and the ability to click and sign out guests (which removes them from the checked in list)
+- once a guest is successfully checked in, the UI should reset and show a success message and add the guest to the checked in list on the left.
+
+- I want all information to be stored locally in the browser using IndexedDB.
+```
+
+Then select the `Forge agent` to turn the approved PRD into an implementation plan.
+
+```markdown
+Help me write an implementation plan for the attached requirement.
+```
 
 The skills in this repo are optimized to keep edits small, consistent, and aligned with the stack.
