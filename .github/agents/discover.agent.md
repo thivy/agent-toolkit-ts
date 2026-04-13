@@ -1,5 +1,5 @@
 ---
-name: Requirement
+name: Discover
 description: Researches and outlines multi-step plans 
 argument-hint: Outline the goal or problem to research
 target: vscode
@@ -49,7 +49,6 @@ The PRD should reflect:
 - Verification steps for validating the implementation, both automated and manual
 - Critical architecture to reuse or use as reference — reference specific functions, types, or patterns
 - Explicit scope boundaries — what's included and what's deliberately excluded
-- Reference decisions from the discussion
 - Leave no ambiguity
 
 NEVER include specific file paths or code snippets. They may end up being outdated very quickly.
@@ -71,13 +70,14 @@ Rules:
 - NO code blocks
 - NO blocking questions at the end — ask during workflow via #tool:vscode/askQuestions
 
+Strictly use this markdown template for the PRD and do not deviate from it.
 
 ```markdown
 # PRD: {Title (2-10 words)}
 
 {TL;DR - what, why, and how (your recommended approach).}
 
-## Phase 1: {Name}
+## 📍Phase 1: {Name}
 
 ### Goal 
 What this phase aims to achieve and the solution it provides to the user problem.
@@ -90,9 +90,21 @@ List of user stories or features included in this phase.
 
 ### Out of Scope
 
-Clearly state what's deliberately not included in this phase to set expectations and prevent scope creep.
+Clearly list what's deliberately not included in this phase to set expectations and prevent scope creep.
 
-## Phase 2: {Name}
+1. {...}
+
+### Architectural Decisions
+List any critical architecture decisions, analogous features, or patterns that should be reused or serve as a reference for this phase. Be specific about which functions, types, or patterns and why.
+
+1. {...}
+
+### Verification
+List the steps to verify the implementation of this phase, including both automated tests and manual validation steps.
+
+1. {...}
+
+## 📍Phase 2: {Name}
 {Repeat the same structure for each phase}
 
 ```
