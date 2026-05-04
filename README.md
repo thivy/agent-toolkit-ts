@@ -5,8 +5,9 @@ This repo showcases GitHub Copilot coding agents and reusable skills that speed 
 ## What You Get
 
 - A working Next.js app under [web/](web/) for hands-on examples.
-- A 2-phase agent workflow under [.github/agents/](.github/agents/) for requirements discovery and implementation planning.
-- Agent and skill docs under [.github/skills/](.github/skills/) to guide Copilot on best practices.
+- A 2-step planning workflow with prompt entry points `create-spec` and `create-plan`.
+- Direct agent entry points `spec` and `planner` for the same planning workflow.
+- Prompt, agent, and skill docs under [.github/](.github/) to guide Copilot on best practices.
 - Consistent conventions for components, features, and state that keep changes small and reviewable.
 
 ## Stack Focus
@@ -20,20 +21,25 @@ This repo showcases GitHub Copilot coding agents and reusable skills that speed 
 ## Repo Tour
 
 - [AGENTS.md](AGENTS.md) - How agents should work in this repo.
-- [.github/agents/](.github/agents/) - Built-in planning agents:
-  - [🔎 Discover](.github/agents/discover.agent.md) - Researches the request, aligns with the user, and writes the feature PRD to `requirement.md`.
-  - [⚒️ Forge](.github/agents/forge.agent.md) - Uses the approved PRD to produce an execution-ready implementation plan in `plan.md`.
+- [.github/prompts/](.github/prompts/) - Prompt entry points for the planning workflow:
+  - [create-spec](.github/prompts/create-spec.prompt.md) - Uses the `spec` agent to research the request and write `spec.md`.
+  - [create-plan](.github/prompts/create-plan.prompt.md) - Uses the `planner` agent to turn an approved `spec.md` into `plan.md`.
+- [.github/agents/](.github/agents/) - Direct planning agents for the same two-step workflow:
+  - [spec](.github/agents/spec.agent.md) - Researches the request and writes the feature PRD to `spec.md`.
+  - [planner](.github/agents/planner.agent.md) - Uses the approved `spec.md` to produce an execution-ready implementation plan in `plan.md`.
 - [web/](web/) - Next.js application code.
 - [.github/skills/](.github/skills/) - Skill references that guide Copilot on React composition, Next.js patterns, UI composition, and state management.
 
-## Agent Workflow
+## Planning Workflow
 
-Use the two agents in order for spec-driven delivery:
+Use either entry point, but keep the sequence the same every time:
 
-1. **🔎 Discover** → capture requirements, research constraints, and produce an approved PRD.
-2. **⚒️ Forge** → turn the approved PRD into an execution-ready implementation plan.
+| Step             | Prompt-driven path                                | Direct-agent path                             | Output                                        |
+| ---------------- | ------------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
+| 1. Specification | `create-spec`                                     | `spec`                                        | `specs/features/{NNN}-{feature-name}/spec.md` |
+| 2. Planning      | `create-plan` after the specification is approved | `planner` after the specification is approved | `specs/features/{NNN}-{feature-name}/plan.md` |
 
-Each agent is phase-scoped and writes only its own artifact under `specs/features/{NNN}-{feature-name}/`: Discover owns `requirement.md`, and Forge owns `plan.md`.
+The prompts are the guided entry points for the same workflow: `create-spec` uses `spec`, and `create-plan` uses `planner`.
 
 ## Quick Start
 
@@ -48,7 +54,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Use With GitHub Copilot
 
-Select the `Discover agent` and provide a feature request. For example:
+You can start with prompts or invoke the agents directly. Both paths produce the same artifacts in the same order.
+
+### Prompt-Driven Path
+
+Run the `create-spec` prompt with a feature request. For example:
 
 ```markdown
 I want to build a fast guest check-in web app that captures first name, last name, and an webcam photo.
@@ -61,10 +71,13 @@ I want to build a fast guest check-in web app that captures first name, last nam
 - I want all information to be stored locally in the browser using IndexedDB.
 ```
 
-Then select the `Forge agent` to turn the approved PRD into an implementation plan.
+This creates the PRD at `specs/features/{NNN}-{feature-name}/spec.md`.
 
-```markdown
-Help me write an implementation plan for the attached requirement.
-```
+After the specification is approved, run the `create-plan` prompt for the same feature folder to create `specs/features/{NNN}-{feature-name}/plan.md`.
+
+### Direct-Agent Path
+
+1. Use `spec` with the same feature request to produce `specs/features/{NNN}-{feature-name}/spec.md`.
+2. After the specification is approved, use `planner` for the same feature to turn that specification into `specs/features/{NNN}-{feature-name}/plan.md`.
 
 The skills in this repo are optimized to keep edits small, consistent, and aligned with the stack.
